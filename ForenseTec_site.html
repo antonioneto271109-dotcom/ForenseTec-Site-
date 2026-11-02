@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ForenseTec</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: cabeçalho simples, hero em duas colunas (texto + marca grande), serviços em grade de 2, etapas em linha, contato em faixa */
+:root {
+  --bg: #F5F8F6;
+  --surface: #FFFFFF;
+  --ink: #0F3D2E;
+  --muted: #475F54;
+  --accent: #167A4C;
+  --line: #D3DFD8;
+  --on-accent: #FFFFFF;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A241B;
+    --surface: #0F3326;
+    --ink: #EAF4EF;
+    --muted: #A6C1B4;
+    --accent: #5EEAB0;
+    --line: #1F4A3A;
+    --on-accent: #0A241B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A241B;
+  --surface: #0F3326;
+  --ink: #EAF4EF;
+  --muted: #A6C1B4;
+  --accent: #5EEAB0;
+  --line: #1F4A3A;
+  --on-accent: #0A241B;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; line-height: 1.1; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Cabeçalho */
+.top { padding-block: 22px; border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 700; font-size: 24px; letter-spacing: -0.03em; }
+.brand span { color: var(--accent); }
+.brand svg { width: 38px; height: 38px; flex: none; }
+.nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; font-weight: 500; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero { padding-block: clamp(48px, 9vw, 104px); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(2.2rem, 5.6vw, 4rem); font-weight: 700; margin-top: 18px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lead { margin-top: 22px; max-width: 54ch; font-size: 19px; color: var(--muted); }
+.actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 22px; border-radius: 6px;
+  font: inherit; font-weight: 500; font-size: 16px; text-decoration: none; cursor: pointer;
+  border: 2px solid var(--accent);
+}
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--accent); }
+.mark { justify-self: center; width: min(100%, 320px); }
+.mark svg { width: 100%; height: auto; display: block; }
+
+/* Seções */
+section { padding-block: clamp(48px, 8vw, 88px); border-top: 1px solid var(--line); }
+.head { max-width: 62ch; display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+.head h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); font-weight: 700; }
+.head p { color: var(--muted); }
+
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.service { padding: 26px 0 30px; border-top: 2px solid var(--ink); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.service h3 { font-size: 1.5rem; font-weight: 700; }
+.service p { color: var(--muted); max-width: 46ch; }
+.service .label { margin-bottom: 2px; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; counter-reset: etapa; }
+.steps li { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding-top: 18px; border-top: 2px solid var(--accent); }
+.steps li::before { counter-increment: etapa; content: counter(etapa); font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); }
+.steps h3 { font-size: 1.25rem; font-weight: 700; }
+.steps p { color: var(--muted); font-size: 16px; }
+
+/* Contato */
+.contact { background: var(--surface); }
+.contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 48px; }
+.channel { display: flex; flex-direction: column; gap: 8px; padding-top: 22px; border-top: 2px solid var(--ink); min-width: 0; }
+.channel .num { font-size: clamp(1.6rem, 3.4vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.channel .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.btn.small { min-height: 42px; padding: 0 16px; font-size: 15px; }
+.place { margin-top: 36px; color: var(--muted); }
+.place strong { color: var(--ink); font-weight: 700; }
+
+footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .mark { width: min(70%, 240px); justify-self: start; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .services, .contact-grid, .steps { grid-template-columns: minmax(0, 1fr); }
+  .services { gap: 0; }
+  .hero p.lead { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="ForenseTec, página inicial">
+      <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" stroke="var(--ink)" stroke-width="3"/>
+        <circle cx="29" cy="29" r="11.5" stroke="var(--accent)" stroke-width="3.5"/>
+        <line x1="37.5" y1="37.5" x2="47" y2="47" stroke="var(--accent)" stroke-width="3.5"/>
+        <path d="M22.5 32 H27.5 V26 H35.5" stroke="var(--ink)" stroke-width="2"/>
+        <circle cx="22.5" cy="32" r="1.9" fill="var(--ink)" stroke="none"/>
+        <circle cx="35.5" cy="26" r="1.9" fill="var(--ink)" stroke="none"/>
+      </svg>
+      <div>Forense<span>Tec</span></div>
+    </a>
+    <nav class="nav" aria-label="Seções do site">
+      <a href="#servicos">Serviços</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="label">Goiânia, Goiás</p>
+        <h1>Software sob encomenda, <em>do jeito que o seu negócio precisa.</em></h1>
+        <p class="lead">A equipe da ForenseTec desenvolve programas de computador sob medida, cuida do suporte e da manutenção e treina quem vai usar.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://wa.me/5562998369312" target="_blank" rel="noopener">Falar no WhatsApp</a>
+          <a class="btn ghost" href="#servicos">Ver serviços</a>
+        </div>
+      </div>
+      <div class="mark">
+        <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Marca da ForenseTec: lupa sobre um circuito dentro de um hexágono">
+          <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" stroke="var(--ink)" stroke-width="1.6"/>
+          <circle cx="29" cy="29" r="11.5" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="37.5" y1="37.5" x2="47" y2="47" stroke="var(--accent)" stroke-width="2"/>
+          <path d="M22.5 32 H27.5 V26 H35.5" stroke="var(--ink)" stroke-width="1.2"/>
+          <circle cx="22.5" cy="32" r="1.2" fill="var(--ink)" stroke="none"/>
+          <circle cx="35.5" cy="26" r="1.2" fill="var(--ink)" stroke="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Serviços</p>
+        <h2>O que a ForenseTec faz</h2>
+        <p>Do sistema feito sob medida ao suporte do dia a dia.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <p class="label">Atividade principal</p>
+          <h3>Desenvolvimento de software sob encomenda</h3>
+          <p>Criamos programas de computador a partir da necessidade da sua empresa, sem depender de soluções prontas que não se encaixam.</p>
+        </article>
+        <article class="service">
+          <h3>Suporte técnico e manutenção</h3>
+          <p>Atendimento para resolver problemas, manter os sistemas funcionando e cuidar de outros serviços de tecnologia da informação.</p>
+        </article>
+        <article class="service">
+          <h3>Portais e serviços de informação na internet</h3>
+          <p>Portais, provedores de conteúdo e outros serviços de informação online, construídos e mantidos pela nossa equipe.</p>
+        </article>
+        <article class="service">
+          <h3>Treinamento e informática</h3>
+          <p>Capacitação para que você e sua equipe usem bem a tecnologia, seja um sistema nosso ou o computador do dia a dia.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Como funciona</p>
+        <h2>Da primeira conversa à entrega</h2>
+        <p>Um caminho simples, com a equipe da ForenseTec ao seu lado em cada etapa.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Conversa inicial</h3>
+          <p>Você conta o que precisa e nós entendemos o problema que o software deve resolver.</p>
+        </li>
+        <li>
+          <h3>Proposta</h3>
+          <p>Definimos o que será feito, em quanto tempo e por qual valor, antes de começar.</p>
+        </li>
+        <li>
+          <h3>Desenvolvimento</h3>
+          <p>Construímos o programa e mostramos o andamento para você ajustar o que for preciso.</p>
+        </li>
+        <li>
+          <h3>Entrega e suporte</h3>
+          <p>Entregamos, treinamos quem vai usar e seguimos com suporte e manutenção.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contato" class="contact">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Contato</p>
+        <h2>Fale com a equipe da ForenseTec</h2>
+        <p>Escolha o canal que for melhor para você.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="channel">
+          <p class="label">WhatsApp</p>
+          <p class="num" id="num-whats">(62) 99836-9312</p>
+          <div class="row">
+            <a class="btn primary small" href="https://wa.me/5562998369312" target="_blank" rel="noopener">Abrir conversa</a>
+            <button class="btn ghost small" type="button" id="copy-whats" onclick="copiar('num-whats','copy-whats')">Copiar número</button>
+          </div>
+        </div>
+        <div class="channel">
+          <p class="label">Telefone</p>
+          <p class="num" id="num-tel">(62) 98343-8050</p>
+          <div class="row">
+            <a class="btn ghost small" href="tel:+5562983438050">Ligar</a>
+            <button class="btn ghost small" type="button" id="copy-tel" onclick="copiar('num-tel','copy-tel')">Copiar número</button>
+          </div>
+        </div>
+      </div>
+      <p class="place"><strong>Onde estamos:</strong> Goiânia, Goiás.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>ForenseTec</span>
+    <span>Goiânia, Goiás</span>
+  </div>
+</footer>
+
+<script>
+function selecionar(el) {
+  var r = document.createRange();
+  r.selectNodeContents(el);
+  var s = window.getSelection();
+  s.removeAllRanges();
+  s.addRange(r);
+}
+function copiar(idNumero, idBotao) {
+  var el = document.getElementById(idNumero);
+  var btn = document.getElementById(idBotao);
+  var original = btn.textContent;
+  function feito() {
+    btn.textContent = 'Número copiado';
+    setTimeout(function () { btn.textContent = original; }, 1800);
+  }
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(el.textContent).then(feito, function () { selecionar(el); });
+    } else {
+      selecionar(el);
+    }
+  } catch (e) {
+    selecionar(el);
+  }
+}
+</script>
+
+</body>
+</html>
